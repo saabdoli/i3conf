@@ -20,6 +20,11 @@ set $mod Mod1
 # chose a FreeType font, such as:
 font pango:DejaVu Sans Mono 10
 
+ 
+# [class="^.*"] border pixel 0
+ gaps inner 5 
+ gaps outer 5 
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -124,9 +129,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+F1 exec google-chrome-stable
 
 # Restore functionality to volume and mute buttons
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 -- +10% && killall - SIGUSR1 i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -- -10% && killall - SIGUSR1 i3status
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 3%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 3%- unmute
 
 # Print Screen
 bindsym Print exec gnome-screenshot --interactive
@@ -160,21 +165,24 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-        mode hide
+        status_command i3status -c ~/.i3/i3status.conf
         hidden_state hide
         position top
         font pango:DejaVu Sans Mono 9 
 
+        # height of bar in pixels
+        height 15
+
         colors {
-            background #000000
+            background #021B21
             statusline #ffffff
         }
 }
 
 # no window border
 new_window pixel 1
+
 # toggle hide/shoy f i3bar
 bindsym $mod+m bar mode toggle
-exec --no-startup-id feh --bg-fill ~/images/wallpapers/moesaic.png
+exec --no-startup-id feh --bg-fill ~/images/wallpapers/blue-foggy-mount.jpg
 exec --no-startup-id nm-applet
